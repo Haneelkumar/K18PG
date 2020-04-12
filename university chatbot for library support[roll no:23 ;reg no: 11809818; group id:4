@@ -1,0 +1,422 @@
+import sqlite3 as db
+import os
+from tkinter import*
+from tkinter import ttk
+from tkinter import messagebox
+import gmplot
+import webbrowser
+{
+"cells": [
+{
+"cell_type": "code",
+"execution_count": 7,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"Requirement already satisfied: newspaper3k in c:\\users\\surya\\anacondafhs\\lib\\site-packages (0.2.8)\n",
+"Requirement already satisfied: cssselect>=0.9.2 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (1.1.0)\n",
+"Requirement already satisfied: PyYAML>=3.11 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (5.1)\n",
+"Requirement already satisfied: feedparser>=5.2.1 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (5.2.1)\n",
+"Requirement already satisfied: beautifulsoup4>=4.4.1 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (4.7.1)\n",
+"Requirement already satisfied: Pillow>=3.3.0 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (5.4.1)\n",
+"Requirement already satisfied: tldextract>=2.0.1 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (2.2.2)\n",
+"Requirement already satisfied: feedfinder2>=0.0.4 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (0.0.4)\n",
+"Requirement already satisfied: lxml>=3.6.0 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (4.3.2)\n",
+"Requirement already satisfied: requests>=2.10.0 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (2.21.0)\n",
+"Requirement already satisfied: tinysegmenter==0.3 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (0.3)\n",
+"Requirement already satisfied: jieba3k>=0.35.1 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (0.35.1)\n",
+"Requirement already satisfied: nltk>=3.2.1 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (3.4)\n",
+"Requirement already satisfied: python-dateutil>=2.5.3 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from newspaper3k) (2.8.0)\n",
+"Requirement already satisfied: soupsieve>=1.2 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from beautifulsoup4>=4.4.1->newspaper3k) (1.8)\n",
+"Requirement already satisfied: idna in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from tldextract>=2.0.1->newspaper3k) (2.8)\n",
+"Requirement already satisfied: requests-file>=1.4 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from tldextract>=2.0.1->newspaper3k) (1.4.3)\n",
+"Requirement already satisfied: setuptools in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from tldextract>=2.0.1->newspaper3k) (40.8.0)\n",
+"Requirement already satisfied: six in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from feedfinder2>=0.0.4->newspaper3k) (1.12.0)\n",
+"Requirement already satisfied: urllib3<1.25,>=1.21.1 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from requests>=2.10.0->newspaper3k) (1.24.1)\n",
+"Requirement already satisfied: chardet<3.1.0,>=3.0.2 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from requests>=2.10.0->newspaper3k) (3.0.4)\n",
+"Requirement already satisfied: certifi>=2017.4.17 in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from requests>=2.10.0->newspaper3k) (2019.3.9)\n",
+"Requirement already satisfied: singledispatch in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from nltk>=3.2.1->newspaper3k) (3.4.0.3)\n",
+"Note: you may need to restart the kernel to use updated packages.\n"
+]
+}
+],
+"source": [
+"pip install newspaper3k"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 2,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"Requirement already satisfied: nltk in c:\\users\\surya\\anacondafhs\\lib\\site-packages (3.4)\n",
+"Requirement already satisfied: six in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from nltk) (1.12.0)\n",
+"Requirement already satisfied: singledispatch in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from nltk) (3.4.0.3)\n",
+"Note: you may need to restart the kernel to use updated packages.\n"
+]
+}
+],
+"source": [
+"pip install nltk"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 5,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"Requirement already satisfied: nltk in c:\\users\\surya\\anacondafhs\\lib\\site-packages (3.4)\n",
+"Requirement already satisfied: six in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from nltk) (1.12.0)\n",
+"Requirement already satisfied: singledispatch in c:\\users\\surya\\anacondafhs\\lib\\site-packages (from nltk) (3.4.0.3)\n",
+"Note: you may need to restart the kernel to use updated packages.\n"
+]
+}
+],
+"source": [
+"pip install nltk"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 3,
+"metadata": {},
+"outputs": [],
+"source": [
+"from newspaper import Article\n",
+"import random\n",
+"import string\n",
+"from sklearn.feature_extraction.text import TfidfVectorizer\n",
+"from sklearn.metrics.pairwise import cosine_similarity\n",
+"import nltk\n",
+"import numpy as np\n",
+"import warnings"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 4,
+"metadata": {},
+"outputs": [
+{
+"ename": "NameError",
+"evalue": "name 'warnings' is not defined",
+"output_type": "error",
+"traceback”;
+],
+"source": [
+"warnings.filterwarnings('ignore')"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 5,
+"metadata": {},
+"outputs": [
+{
+"ename": "NameError",
+"evalue": "name 'nltk' is not defined",
+"output_type": "error",
+"traceback": [
+],
+"source": [
+"nltk.download('punkt',quiet=True)\n",
+"nltk.download('wordnet',quiet=True)"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 6,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"An applicant is a person who seeks for an admission and a student who gets admitted in university will visit library.
+"\n",
+"A dashboard for students to get quick idea about library rules and regulations.\n",
+"\n",
+"there will be seven days time limit for a student to take the books to his living place.\n",
+"\n",
+"there is a book limit limit per person to take the books.\n",
+"\n",
+"Fees can be collected book-wise for each student incase of late submission\n",
+"\n",
+"Students receive SMS and email alerts of fees transactions\n",
+"\n",
+"Fees collection is centralized for a society of university\n",
+"\n",
+"All details of admissions can be fed on the software\n",
+"\n",
+"Student registration\n",
+"\n",
+"Daily Fees collection registers\n",
+"\n",
+"Fees abstract report\n",
+"\n",
+"Fees write Off report\n",
+"\n",
+"Bank-wise collection report\n",
+"\n",
+"Outstanding fee register\n",
+"\n",
+"Admission position report\n",
+"\n",
+]
+}
+],
+"source": [
+"article = Article('https://www.iitms.co.in/college-erp/university-library support/')\n",
+"article.download()\n",
+"article.parse()\n",
+"article.nlp()\n",
+"corpus = article.text\n",
+" \n",
+"print(corpus) "
+]
+},
+{
+"cell_type": "code",
+"execution_count": 7,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"['An applicant is a person who seeks for an admission and a student who gets admitted in university.',the student will visit the library and the librarian will mention the rules and regulations to follow by the students in the library.the student has a time limit and book limit to take the books to the living place to study.Incase of late submission the student will be charged of 10 rupees per book per day.the late fee can pay through online mode and there will be update in your fees .
+}
+],
+"source": [
+"#Tokenization\n",
+"text = corpus\n",
+"sent_tokens = nltk.sent_tokenize(text)\n",
+"print(sent_tokens)"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 8,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+['An applicant is a person who seeks for an admission and a student who gets admitted in university.',the student will visit the library and the librarian will mention the rules and regulations to follow by the students in the library.the student has a time limit and book limit to take the books to the living place to study.Incase of late submission the student will be charged of 10 rupees per book per day.the late fee can pay through online mode and there will be update in your fees .
+}
+]
+}
+],
+"source": [
+"remove_punct_dict = dict( ( ord(punct),None) for punct in string.punctuation)\n",
+"print(string.punctuation)\n",
+"print(remove_punct_dict)"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 9,
+"metadata": {},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"[
+}
+],
+"source": [
+"#Create a function to return a list of lemmatized lower case words after removing punctuations\n",
+"def LemNormalize(text):\n",
+" return nltk.word_tokenize(text.lower().translate(remove_punct_dict))\n",
+"print(LemNormalize(text))"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 13,
+"metadata": {},
+"outputs": [],
+"source": [
+"#Keywords Matching\n",
+"#Greeting Inputs\n",
+"GREETING_INPUTS = [\"hi\", \"hello\",\"hola\",\"greetings\",\"wassup\",\"hey\"]\n",
+"\n",
+"#GREETING responsesnback to the user\n",
+"GREETING_RESPONSES=[\"howdy\",\"hi\",\"hey\", \"what's good\", \"hello\",\"hey there\"]\n",
+"\n",
+"#Function to return a random greeting response to ausers greeting\n",
+"def greeting(sentence):\n",
+" #if the user's inputis a greeting,then return a randomly chosen greeting response\n",
+" for word in sentence.split():\n",
+" if word.lower() in GREETING_INPUTS:\n",
+" return random.choice(GREETING_RESPONSES)"
+]
+},
+{
+"cell_type": "code",
+"execution_count": 11,
+"metadata": {
+"scrolled": true
+},
+"outputs": [
+{
+"name": "stdout",
+"output_type": "stream",
+"text": [
+"["['An applicant is a person who seeks for an admission and a student who gets admitted in university.',the student will visit the library and the librarian will mention the rules and regulations to follow by the students in the library.the student has a time limit and book limit to take the books to the living place to study.Incase of late submission the student will be charged of 10 rupees per book per day.the late fee can pay through online mode and there will be update in your fees .
+}
+},
+{
+"evalue": "'return' outside function (<ipython-input-11-390923d661e2>, line 54)",
+"output_type": "error",
+"traceback": [
+]
+}
+],
+"source": [
+"#The user response /query\n",
+"user_response = \"What are the rules and regulations in library\"\n",
+"\n",
+"user_response = user_response.lower() #Make that response lower case\n",
+"#Set the chatbot response to an empty string\n",
+"robo_response = ' '\n",
+"#Append the users responses to the sentence list\n",
+"sent_tokens.append(user_response)\n",
+"\n",
+"###print the sentence list after appending the user response\n",
+"print(sent_tokens)\n",
+"#create a TfidfVectorizer object\n",
+"TfidfVec = TfidfVectorizer(tokenizer = LemNormalize, stop_words='english')\n",
+"\n",
+"#convert the text to a matrix of Tf-IDF features\n",
+"tfidf = TfidfVec.fit_transform(sent_tokens)\n",
+"\n",
+"###print the TFIDF features\n",
+"print(tfidf)\n",
+"\n",
+"#Get the measure of similarity (similarity scores)\n",
+"vals = cosine_similarity(tfidf[-1],tfidf)\n",
+"\n",
+"#print the similarity scores\n",
+"print(vals)\n",
+"\n",
+"#get the index of the most similar text/sentence to the users response\n",
+"idx = vals.argsort()[0][-2]\n",
+"\n",
+"#Reduce the dimensionality of vals\n",
+"flat = vals.flatten()\n",
+"\n",
+"#sort the list in ascending order\n",
+"flat.sort()\n",
+"\n",
+"#Get the most similar score to the users response\n",
+"score = flat[-2]\n",
+"\n",
+"#Print the similarity score\n",
+"print(score)\n",
+"\n",
+"#if the variable 'score' is 0 then the most similar score to the users response\n",
+"if(score == 0):\n",
+" robo_response = robo_response+\" I apologize, I don't understand.\"\n",
+"else:\n",
+" robo_response = robo_response+sent_tokens[idx]\n",
+" \n",
+"#Print the chat bot response\n",
+"#print(robo_response)\n",
+"\n",
+"#Remove the userResponse from the sentence tokens list\n",
+"#sent_tokens.remove(user_response)\n",
+"\n",
+"return robo_response"
+]
+},
+{
+"cell_type": "code",
+"execution_count": null,
+"metadata": {},
+"outputs": [],
+"source": [
+"flag = True\n",
+"print(\"UNIVERSITYCHATBOT: I am UNIVERSITYCHATBOT of the LIBRARY . I will answer your queries about library. if you want to exit ,type Bye\")\n",
+"while(flag == True):\n",
+" user_response = input()\n",
+" user_response = user_response.lower()\n",
+" if(user_response != 'bye'):\n",
+" if(user_response == 'thanks' or user_response == 'thank You'):\n",
+" flag=False\n",
+" print(\"ADMINCHATBOT : you are welcome !\")\n",
+" else:\n",
+" if(greeting(user_response) != None):\n",
+" print(\"AdminChatBot : \"+greeting(user_response))\n",
+" else:\n",
+" print(\"AdminChatCbot :\"+response(user_response))\n",
+" else:\n",
+" flag=False\n",
+" print(\"ADMINCHATBOT : Chat with U Later\")\n",
+" "
+]
+},
+{
+"cell_type": "code",
+"execution_count": null,
+"metadata": {},
+"outputs": [],
+"source": []
+},
+{
+"cell_type": "code",
+"execution_count": null,
+"metadata": {},
+"outputs": [],
+"source": []
+},
+{
+"cell_type": "code",
+"execution_count": null,
+"metadata": {},
+"outputs": [],
+"source": []
+},
+{
+"cell_type": "code",
+"execution_count": null,
+"metadata": {},
+"outputs": [],
+"source": []
+}
+],
+"metadata": {
+"kernelspec": {
+"display_name": "Python 3",
+"language": "python",
+"name": "python3"
+},
+"language_info": {
+"codemirror_mode": {
+"name": "ipython",
+"version": 3
+},
+"file_extension": ".py",
+"mimetype": "text/x-python",
+"name": "python",
+"nbconvert_exporter": "python",
+"pygments_lexer": "ipython3",
+"version": "3.7.3"
+}
+},
+"nbformat": 4,
+"nbformat_minor": 2
+}
